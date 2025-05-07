@@ -3,6 +3,7 @@ import { Location } from "./Location";
 
 export class Rules {
     private message: string = "";
+    
     constructor(protected game: GameS25) {}
 
     /* Private Methods */
@@ -30,7 +31,7 @@ export class Rules {
 
     private pieceHasValidMovePath(startLocation: Location, endLocation: Location): boolean {
         const piece = this.game.getGameBoard().getSquare(startLocation).getPiece();
-        return (piece != null && piece.validMovePath());
+        return (piece != null && piece.validMovePath(startLocation, endLocation));
     }
 
     private standardChecks(startLocation: Location, endLocation: Location, action: string): boolean {
@@ -77,6 +78,16 @@ export class Rules {
         const result: boolean =
             this.standardChecks(startLocation, endLocation, "attack") &&
             this.isEnemyPieceAt(endLocation);
+        this.message = result ? "" : "The piece you are attacking does not belong to your team.";
+        return result;
+    }
+
+    checkValidRangedAttack(startLocation: Location, endLocation: Location): boolean {
+        const result: boolean =
+            this.standardChecks(startLocation, endLocation, "attack") &&
+            this.isEnemyPieceAt(endLocation) &&
+            Math.sqrt(Math.pow(endLocation.getRow() - startLocation.getRow(), 2) +
+                      Math.pow(endLocation.getCol() - startLocation.getCol(), 2)) <= 4;
         this.message = result ? "" : "The piece you are attacking does not belong to your team.";
         return result;
     }

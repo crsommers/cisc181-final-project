@@ -1,4 +1,5 @@
 import { Piece } from "./Piece";
+import { Location } from "./Location";
 
 export class PieceScrat extends Piece {
     public static MAX_CRACKS: number = 2;
@@ -27,7 +28,6 @@ export class PieceScrat extends Piece {
     getNumCracks(): number { return this.numCracks; }
     speak(): string { return "Aaaahhhh!"; }
 
-
     /* Setters */
     increaseNumAttacks(): void { this.numAttacks += 1; }
     increaseNumRecruits(): void { this.numRecruits += 1; }
@@ -43,7 +43,9 @@ export class PieceScrat extends Piece {
     canSpawn(): boolean { return this.original && this.numCracks < PieceScrat.MAX_CRACKS;}
 
     /* Long-Evaulation Getters */
-    validMovePath(): boolean { return true; }
+    validMovePath(start: Location, end: Location): boolean {
+        return Math.sqrt(Math.pow(end.getRow() - start.getRow(), 2) + Math.pow(end.getCol() - start.getCol(), 2)) <= 2;
+    }
 
     spawn(): PieceScrat {
         this.numSpawns += 1;

@@ -2,8 +2,6 @@ import { GameBoard } from "./GameBoard";
 import { Team } from "./Team";
 
 export abstract class Game {
-
-
     constructor(
         private gameBoard: GameBoard,
         private teamA: Team,

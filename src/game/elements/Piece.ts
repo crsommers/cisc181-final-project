@@ -1,3 +1,5 @@
+import { Location } from "./Location";
+
 export abstract class Piece {
     protected numSpawns: number = 0;
     protected allowableActions: string[] = [];
@@ -11,7 +13,7 @@ export abstract class Piece {
 
     /* Abstracts */
     abstract speak(): string;
-    abstract validMovePath(): boolean;
+    abstract validMovePath(start: Location, end: Location): boolean;
     abstract spawn(): Piece;
     abstract canSpawn(): boolean;
     abstract updateAction(action: string): void;

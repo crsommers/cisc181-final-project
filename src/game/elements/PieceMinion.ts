@@ -1,4 +1,5 @@
 import { Piece } from "./Piece";
+import { Location } from "./Location";
 
 export class PieceMinion extends Piece {
     private numRecruits: number;
@@ -29,7 +30,9 @@ export class PieceMinion extends Piece {
     canSpawn(): boolean { return this.original && this.numSpawns <= PieceMinion.MAX_NUM_SPAWNED; }
 
     /* Long-Evaluation getters */
-    validMovePath(): boolean { return true; }
+    validMovePath(start: Location, end: Location): boolean {
+        return Math.sqrt(Math.pow(end.getRow() - start.getRow(), 2) + Math.pow(end.getCol() - start.getCol(), 2)) <= 3;
+    }
 
     spawn(): PieceMinion {
         this.numSpawns += 1;
